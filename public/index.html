@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roboto</title>
+  <link rel="icon" href="/avatar.png" />
+  <link rel="stylesheet" href="/style.css" />
+  <!-- Marked for markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@15/marked.min.js"></script>
+</head>
+<body>
+
+  <!-- ================================================================== -->
+  <!-- Login screen                                                        -->
+  <!-- ================================================================== -->
+  <div id="login-screen" class="screen">
+    <div class="login-card">
+      <img src="/avatar.png" alt="Roboto" class="login-avatar" />
+      <h1>Roboto</h1>
+      <p class="login-subtitle">Enter the password to continue</p>
+      <form id="login-form" autocomplete="off">
+        <input
+          id="password-input"
+          type="password"
+          placeholder="Password"
+          required
+          autofocus
+        />
+        <button type="submit">Log in</button>
+      </form>
+      <p id="login-error" class="error" hidden>Invalid password</p>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!-- Chat screen                                                         -->
+  <!-- ================================================================== -->
+  <div id="chat-screen" class="screen" hidden>
+    <!-- Top bar -->
+    <header id="chat-header">
+      <div class="header-left">
+        <img src="/avatar.png" alt="Roboto" class="header-avatar" />
+        <span class="header-title">Roboto</span>
+      </div>
+      <button id="logout-btn" title="Log out">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      </button>
+    </header>
+
+    <!-- Messages area -->
+    <main id="messages"></main>
+
+    <!-- Attachment preview -->
+    <div id="attachment-preview" hidden></div>
+
+    <!-- Input bar -->
+    <footer id="input-bar">
+      <label id="attach-btn" title="Attach file or image">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+        <input id="file-input" type="file" multiple hidden />
+      </label>
+      <textarea
+        id="message-input"
+        placeholder="Type a message..."
+        rows="1"
+      ></textarea>
+      <button id="send-btn" title="Send message">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

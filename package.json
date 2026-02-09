@@ -1,0 +1,13 @@
+{
+  "name": "roboto-webchat",
+  "version": "1.0.0",
+  "description": "A simple password-protected webchat for OpenClaw agents",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cookie-session": "^2.1.0",
+    "express": "^4.21.0"
+  }
+}
