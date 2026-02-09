@@ -614,6 +614,28 @@
   });
 
   // -----------------------------------------------------------------------
+  // iOS virtual keyboard handling
+  // -----------------------------------------------------------------------
+  if (window.visualViewport) {
+    const onViewportResize = () => {
+      // When the iOS keyboard opens, visualViewport shrinks.
+      // Adjust the chat screen height to match the visible area.
+      const vh = window.visualViewport.height;
+      document.documentElement.style.setProperty("height", vh + "px");
+      document.body.style.setProperty("height", vh + "px");
+      scrollToBottom();
+    };
+    window.visualViewport.addEventListener("resize", onViewportResize);
+    window.visualViewport.addEventListener("scroll", onViewportResize);
+  }
+
+  // Prevent iOS bounce/pull-to-refresh on the body
+  document.body.addEventListener("touchmove", (e) => {
+    if (e.target.closest("#messages")) return; // allow scrolling in messages
+    e.preventDefault();
+  }, { passive: false });
+
+  // -----------------------------------------------------------------------
   // Init
   // -----------------------------------------------------------------------
   checkSession();

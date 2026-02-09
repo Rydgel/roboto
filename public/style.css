@@ -25,16 +25,22 @@
 
 html, body {
   height: 100%;
+  height: 100dvh;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 .screen {
   display: flex;
   height: 100%;
+  height: 100dvh;
 }
 
 .screen[hidden] {
@@ -137,6 +143,7 @@ html, body {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
+  padding-top: calc(0.75rem + env(safe-area-inset-top, 0px));
   border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
@@ -177,6 +184,8 @@ html, body {
 #messages {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -368,8 +377,10 @@ html, body {
   align-items: flex-end;
   gap: 0.5rem;
   padding: 0.75rem 1rem;
+  padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--border);
   flex-shrink: 0;
+  background: var(--bg);
 }
 
 #message-input {
@@ -378,7 +389,7 @@ html, body {
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 0.65rem 0.9rem;
-  font-size: 0.935rem;
+  font-size: 16px; /* Prevents iOS zoom on focus */
   color: var(--text);
   resize: none;
   outline: none;
@@ -455,7 +466,7 @@ html, body {
 }
 
 /* ===================================================================
-   Responsive
+   Responsive / Mobile
    =================================================================== */
 @media (max-width: 600px) {
   #chat-screen {
@@ -464,7 +475,33 @@ html, body {
   .message {
     max-width: 92%;
   }
+  .assistant-row {
+    max-width: 92%;
+  }
   .login-card {
     margin: 0 1rem;
+  }
+  #attach-btn {
+    padding: 0.6rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #send-btn {
+    padding: 0.6rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #logout-btn {
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+  }
+  #login-form input {
+    padding: 0.85rem 1rem;
+    font-size: 16px;
+  }
+  #login-form button {
+    padding: 0.85rem;
+    font-size: 1rem;
   }
 }
