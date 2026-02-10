@@ -459,6 +459,7 @@
                 scrollToBottom();
               }
 
+
               // Handle completed response (non-streaming fallback)
               if (event.type === "response.completed" && event.response) {
                 const output = event.response.output;
@@ -576,12 +577,72 @@
     scrollToBottom();
   }
 
+  // File extensions that get rendered as download cards
+  const FILE_EXTENSIONS = /\.(pdf|doc|docx|xls|xlsx|ppt|pptx|zip|tar|gz|rar|csv|txt|md|json|xml|yaml|yml|html|css|js|py|rb|go|rs|java|c|cpp|h|sh)$/i;
+
+  const FILE_ICONS = {
+    pdf: "\u{1F4C4}", // page
+    doc: "\u{1F4DD}", docx: "\u{1F4DD}",
+    xls: "\u{1F4CA}", xlsx: "\u{1F4CA}",
+    ppt: "\u{1F4CA}", pptx: "\u{1F4CA}",
+    zip: "\u{1F4E6}", tar: "\u{1F4E6}", gz: "\u{1F4E6}", rar: "\u{1F4E6}",
+    csv: "\u{1F4CA}",
+    _default: "\u{1F4CE}", // paperclip
+  };
+
+  function getFileIcon(filename) {
+    const ext = (filename.match(/\.(\w+)$/) || [])[1];
+    return (ext && FILE_ICONS[ext.toLowerCase()]) || FILE_ICONS._default;
+  }
+
+  function getFileName(url) {
+    try {
+      const pathname = new URL(url, window.location.origin).pathname;
+      return decodeURIComponent(pathname.split("/").pop()) || "file";
+    } catch {
+      return url.split("/").pop() || "file";
+    }
+  }
+
   function renderMarkdown(el, text) {
     if (typeof marked !== "undefined") {
       el.innerHTML = marked.parse(text);
     } else {
       el.textContent = text;
     }
+    // Post-process: turn file links into download cards
+    el.querySelectorAll("a").forEach((a) => {
+      const href = a.getAttribute("href");
+      if (!href) return;
+      if (FILE_EXTENSIONS.test(href)) {
+        const name = getFileName(href);
+        const icon = getFileIcon(name);
+        const card = document.createElement("a");
+        card.href = href;
+        card.target = "_blank";
+        card.rel = "noopener";
+        card.className = "file-download-card";
+        card.download = name;
+        card.innerHTML =
+          `<span class="file-download-icon">${icon}</span>` +
+          `<span class="file-download-info">` +
+            `<span class="file-download-name">${escapeHtml(name)}</span>` +
+            `<span class="file-download-action">Tap to download</span>` +
+          `</span>`;
+        a.replaceWith(card);
+      }
+    });
+    // Also make image links open in new tab on tap
+    el.querySelectorAll("img").forEach((img) => {
+      if (!img.parentElement || img.parentElement.tagName !== "A") {
+        const wrapper = document.createElement("a");
+        wrapper.href = img.src;
+        wrapper.target = "_blank";
+        wrapper.rel = "noopener";
+        img.parentElement.insertBefore(wrapper, img);
+        wrapper.appendChild(img);
+      }
+    });
   }
 
   function scrollToBottom() {

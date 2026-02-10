@@ -269,6 +269,56 @@ html, body {
   color: var(--accent-hover);
 }
 
+/* File download cards */
+.file-download-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem 0.8rem;
+  margin: 0.5em 0;
+  text-decoration: none;
+  color: var(--text);
+  transition: background 0.15s, border-color 0.15s;
+  cursor: pointer;
+}
+
+.file-download-card:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--accent);
+}
+
+.file-download-card:active {
+  background: rgba(255,255,255,0.12);
+}
+
+.file-download-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.file-download-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.file-download-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.file-download-action {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
 /* Typing indicator row */
 .typing-row {
   display: flex;
